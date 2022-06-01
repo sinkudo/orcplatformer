@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
     int hp;
-    int mp;
+    int ragePool;
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
-    [SerializeField] private bool isGrounded = false;
+    private bool isGrounded = false;
     float moveHorizontal;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
     private bool justJumped = false;
-
+    private bool holdingJump = false;
+    Vector2 vmove;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,30 +24,93 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-
+        vmove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        moveHorizontal = vmove.x;
         if (!justJumped && Input.GetButtonDown("Jump") && isGrounded)
+        {
             justJumped = true;
+            holdingJump = true;
+        }
     }
     private void FixedUpdate()
     {
         checkGround();
-        if (moveHorizontal < -0.1f || moveHorizontal > 0.1f)
-            Run();
+        //if (moveHorizontal < -0.1f || moveHorizontal > 0.1f)
+        //    Move();
+        Move();
         if (justJumped)
+        {
+            if (Input.GetButton("Jump"))
+                holdingJump = true;
+            else
+                holdingJump = false;
             Jump();
-        
+        }
     }
-    void Run()
+    public  void Move()
     {
-        sprite.flipX = moveHorizontal < 0;
-        rb.AddForce(new Vector2(moveHorizontal * speed, 0f), ForceMode2D.Impulse);
+        //sprite.flipX = moveHorizontal < 0;
+        //rb.AddForce(new Vector2(moveHorizontal * speed, 0f), ForceMode2D.Impulse);
+        if (moveHorizontal == -1f)
+            sprite.flipX = true;
+        else if (moveHorizontal == 1f)
+            sprite.flipX = false;
+        rb.velocity = new Vector2(moveHorizontal * speed * Time.deltaTime, rb.velocity.y);
     }
-    void Jump()
+
+    //public bool jumpcontrol = false;
+    //public int jumpIter = 20;
+    //public int jumpValueIter = 60;
+    //public void Jump()
+    //{
+    //    print(jumpIter + " " + holdingJump);
+    //    if (jumpIter == 20)
+    //    {
+    //        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    //        jumpIter++;
+    //    }
+    //    else if(jumpIter <= 30 && holdingJump)
+    //    {
+
+    //        rb.AddForce(Vector2.up * (jumpForce + jumpIter));
+    //        jumpIter++;
+    //    }
+    //    else
+    //    {
+    //        justJumped = false;
+    //        jumpIter = 20;
+    //    }
+    //}
+
+    public bool jumpcontrol = false;
+    public int jumpIter = 0;
+    public int jumpMax = 10;
+    public void Jump()
     {
-        justJumped = false;
-        rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        print(jumpIter + " " + holdingJump + " " + jumpMax);
+        if (jumpIter == 0 && holdingJump)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpIter++;
+        }
+        else if (jumpIter <= jumpMax && holdingJump)
+        {
+            rb.AddForce(Vector2.up * (jumpForce + jumpIter));
+            jumpIter++;
+        }
+        else
+        {
+            justJumped = false;
+            jumpIter = 0;
+        }
     }
+
+    //public  void Jump()
+    //{
+    //    justJumped = false;
+    //    rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+    //}
+    
     void checkGround()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);

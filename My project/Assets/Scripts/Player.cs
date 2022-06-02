@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator animator;
     public LayerMask enemyLayers;
-    [SerializeField] private GameObject attackHitbox;
+    [SerializeField] private GameObject Attack_Hitbox;
 
     private bool clickedJump = false;
     private bool holdingJump = false;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashPower;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
+    Collider2D hitbox;
 
     private bool canAttack = true;
     private bool isAttacking = false;
@@ -46,8 +47,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        attackHitbox.SetActive(false);
-        //hitbox = attackHitbox.GetComponent<Player_Attack>();
+        Attack_Hitbox.SetActive(false);
+        hitbox = Attack_Hitbox.GetComponent<Collider2D>();
     }
 
     void Update()
@@ -62,7 +63,13 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
-        StartCoroutine(Attack());
+        //StartCoroutine(Attack());
+        if(Input.GetKeyDown(KeyCode.Z) && !isAttacking)
+        {
+            isAttacking = true;
+            state = Player_State.Attack;
+            StartCoroutine(DoAttack());
+        }
     }
     private void FixedUpdate()
     {
@@ -145,19 +152,27 @@ public class Player : MonoBehaviour
         {
             isAttacking = true;
             state = Player_State.Attack;
-            attackHitbox.SetActive(true);
+            Attack_Hitbox.SetActive(true);
             
             yield return new WaitForSeconds(0.3f);
-            attackHitbox.SetActive(false);
+            Attack_Hitbox.SetActive(false);
             isAttacking = false;
         }
-        
     }
+
     public float getPlayerDamage()
     {
         return Damage;
     }
-
+    IEnumerator DoAttack()
+    {
+        Attack_Hitbox.SetActive(true);
+        Attack_Hitbox.transform.localScale += new Vector3(0.0001f, 0, 0);
+        yield return new WaitForSeconds(0.3f);
+        Attack_Hitbox.transform.localScale += new Vector3(-0.0001f, 0, 0);
+        Attack_Hitbox.SetActive(false);
+        isAttacking = false;
+    }
 }
 
 public enum Player_State

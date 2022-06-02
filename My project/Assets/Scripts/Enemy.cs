@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -21,24 +22,15 @@ public class Enemy : MonoBehaviour
         
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.name == "Attack_Hitbox")
-    //    {
-    //        print("hit");
-    //        hp -= player.getPlayerDamage();
-    //    }
-    //    print(hp);
-    //    if (hp <= 0)
-    //        Destroy(gameObject);
-    //}
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Attack_Hitbox")
         {
             print("hit");
-            rb.velocity = rb.velocity;
+            hp -= player.getPlayerDamage();
         }
+        print(hp);
+        if (hp <= 0)
+            Destroy(gameObject);
     }
 }

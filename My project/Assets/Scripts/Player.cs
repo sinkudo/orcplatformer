@@ -173,6 +173,10 @@ public class Player : MonoBehaviour
         Attack_Hitbox.SetActive(false);
         isAttacking = false;
     }
+    public bool getPlayerDirection()
+    {
+        return facingRight;
+    }
 }
 
 public enum Player_State

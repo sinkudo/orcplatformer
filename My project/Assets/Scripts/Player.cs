@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    int hp;
-    int ragePool;
+    private float hp;
+    private float ragePool;
+    private float damage = 33f;
+
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     private bool isGrounded = false;
@@ -12,6 +14,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
+    public LayerMask enemyLayers;
+    [SerializeField] private GameObject attackHitbox;
 
     private bool clickedJump = false;
     private bool holdingJump = false;
@@ -26,6 +30,9 @@ public class Player : MonoBehaviour
 
     private bool canAttack = true;
     private bool isAttacking = false;
+    private float Damage = 33f;
+
+    //Player_Attack hitbox;
 
     Vector2 vmove;
     private Player_State state
@@ -35,14 +42,17 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        attackHitbox.SetActive(false);
+        //hitbox = attackHitbox.GetComponent<Player_Attack>();
     }
 
     void Update()
     {
-        
+        //print(hitbox.s);
         vmove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveHorizontal = vmove.x;
 
@@ -52,23 +62,31 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
-        if (isGrounded && moveHorizontal == 0 && !isAttacking) state = Player_State.Idle;
-        //Attack();
+        StartCoroutine(Attack());
     }
     private void FixedUpdate()
     {
         
         if (isDashing) return;
-        
         if (moveHorizontal > 0 && !facingRight || moveHorizontal < 0 && facingRight) Flip();
+
         checkGround();
-        Move();
+        if (moveHorizontal < 0 || moveHorizontal > 0)
+            Move();
+        else
+            Stay();
         Jump();
-        
+    }
+    private void Stay()
+    {
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        if (isGrounded && !isAttacking)
+            state = Player_State.Idle;
     }
     public  void Move()
     {
-        if (isGrounded && moveHorizontal != 0 && !isAttacking) state = Player_State.Run;
+        //if (isGrounded && moveHorizontal != 0 && !isAttacking) state = Player_State.Run;
+        if(isGrounded && !isAttacking) state = Player_State.Run;
         rb.velocity = new Vector2(moveHorizontal * speed, rb.velocity.y);
     }
 
@@ -76,9 +94,11 @@ public class Player : MonoBehaviour
     [SerializeField] public int jumpMax = 10;
     public void Jump()
     {
+        if (!isGrounded && !isAttacking)
+            state = Player_State.Jump;
         if (clickedJump)
         {
-            state = Player_State.Jump;
+            //state = Player_State.Jump;
             if (Input.GetButton("Jump") && jumpIter++ < jumpMax)
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             else
@@ -119,17 +139,25 @@ public class Player : MonoBehaviour
             canDash = true;
         }
     }
-    private void Attack()
+    private IEnumerator Attack()
     {
         if (Input.GetKeyDown(KeyCode.Z) && !isAttacking)
         {
-            print("Attack");
             isAttacking = true;
             state = Player_State.Attack;
-            //yield return new WaitForSeconds(1);
-            //isAttacking = false;
+            attackHitbox.SetActive(true);
+            
+            yield return new WaitForSeconds(0.3f);
+            attackHitbox.SetActive(false);
+            isAttacking = false;
         }
+        
     }
+    public float getPlayerDamage()
+    {
+        return Damage;
+    }
+
 }
 
 public enum Player_State

@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Z) && !isAttacking)
         {
-            print(combocnt + " " + timeForCombo);
             isAttacking = true;
             if (combocnt == 0)
                 state = Player_State.Attack1;

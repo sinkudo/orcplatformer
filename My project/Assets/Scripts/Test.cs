@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    private int dmg = 3;
-    private int hp = 6;
-    
+    private void Update()
+    {
+        Debug.DrawLine(transform.position, transform.position - Vector3.up);
+    }
 }

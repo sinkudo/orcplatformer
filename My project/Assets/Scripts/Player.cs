@@ -92,7 +92,6 @@ public class Player : MonoBehaviour
     }
     public  void Move()
     {
-        //if (isGrounded && moveHorizontal != 0 && !isAttacking) state = Player_State.Run;
         if(isGrounded && !isAttacking) state = Player_State.Run;
         rb.velocity = new Vector2(moveHorizontal * speed, rb.velocity.y);
     }
@@ -105,7 +104,6 @@ public class Player : MonoBehaviour
             state = Player_State.Jump;
         if (clickedJump)
         {
-            //state = Player_State.Jump;
             if (Input.GetButton("Jump") && jumpIter++ < jumpMax)
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             else
@@ -166,8 +164,9 @@ public class Player : MonoBehaviour
     }
     IEnumerator DoAttack()
     {
-        Attack_Hitbox.SetActive(true);
-        Attack_Hitbox.transform.localScale += new Vector3(0.0001f, 0, 0);
+        //
+        //Вызов ActivateHitBox() происходит по ивенту во время выполнения анимации
+        //
         yield return new WaitForSeconds(0.3f);
         Attack_Hitbox.transform.localScale += new Vector3(-0.0001f, 0, 0);
         Attack_Hitbox.SetActive(false);
@@ -176,6 +175,11 @@ public class Player : MonoBehaviour
     public bool getPlayerDirection()
     {
         return facingRight;
+    }
+    private void ActivateHitbox()
+    {
+        Attack_Hitbox.SetActive(true);
+        Attack_Hitbox.transform.localScale += new Vector3(0.0001f, 0, 0);
     }
 }
 

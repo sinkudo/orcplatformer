@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     private bool canAttack = true;
     private bool isAttacking = false;
     private float Damage = 33f;
+    private float timeForCombo = 0f;
+    private int combocnt = 0;
 
     //Player_Attack hitbox;
 
@@ -43,7 +45,6 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -53,27 +54,43 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //print(hitbox.s);
+        if(!isAttacking && combocnt > 0)
+            timeForCombo += Time.deltaTime;
+        if (timeForCombo >= 1f)
+        {
+            timeForCombo = 0f;
+            combocnt = 0;
+        }
+        if (combocnt >= 3)
+        {
+            timeForCombo = 0;
+            combocnt = 0;
+        }
         vmove = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveHorizontal = vmove.x;
 
         if (!clickedJump && Input.GetButtonDown("Jump") && isGrounded)
-        {
             clickedJump = true;
-        }
+     
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
-        //StartCoroutine(Attack());
+
         if(Input.GetKeyDown(KeyCode.Z) && !isAttacking)
         {
+            print(combocnt + " " + timeForCombo);
             isAttacking = true;
-            state = Player_State.Attack;
+            if (combocnt == 0)
+                state = Player_State.Attack1;
+            else if (combocnt == 1)
+                state = Player_State.Attack2;
+            else if (combocnt == 2)
+                state = Player_State.Attack;
+            combocnt++;
             StartCoroutine(DoAttack());
         }
     }
     private void FixedUpdate()
     {
-        
         if (isDashing) return;
         if (moveHorizontal > 0 && !facingRight || moveHorizontal < 0 && facingRight) Flip();
 
@@ -93,16 +110,21 @@ public class Player : MonoBehaviour
     public  void Move()
     {
         if(isGrounded && !isAttacking) state = Player_State.Run;
+
         rb.velocity = new Vector2(moveHorizontal * speed, rb.velocity.y);
     }
-
     public int jumpIter = 0;
     [SerializeField] public int jumpMax = 10;
     public void Jump()
     {
         if (!isGrounded && !isAttacking)
             state = Player_State.Jump;
-        if (clickedJump)
+        if (!isGrounded && isAttacking)
+        {
+            rb.velocity = new Vector2(rb.velocity.x * 0.5f, rb.velocity.y * 0.5f);
+            clickedJump = false;
+        }
+        else if (clickedJump)
         {
             if (Input.GetButton("Jump") && jumpIter++ < jumpMax)
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -189,5 +211,7 @@ public enum Player_State
     Run,
     Dash,
     Jump,
-    Attack
+    Attack,
+    Attack1,
+    Attack2
 }

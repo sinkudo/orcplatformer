@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    private float hp;
+    [SerializeField] private float hp;
     private float ragePool;
     private float damage = 33f;
 
@@ -27,7 +27,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashPower;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
-    Collider2D hitbox;
 
     private bool canAttack = true;
     private bool isAttacking = false;
@@ -49,8 +48,6 @@ public class Player : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
-        hitbox = Attack_Hitbox.GetComponent<Collider2D>();
-        
     }
 
     void Update()
@@ -210,6 +207,13 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 0.1f);
+    }
+    public void TakeDamage(float _damage)
+    {
+        print("player poluchi");
+        hp -= _damage;
+        if (hp <= 0)
+            Destroy(gameObject);
     }
 }
 

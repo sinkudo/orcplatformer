@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -114,7 +114,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Enemy_Peasant_Attack_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 12
+        width: 32
+        height: 31
+      alignment: 9
+      pivot: {x: 0.41115516, y: 0.39065248}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53862e314d8206a47a4e75abbe0d2b29
+      internalID: -1169255387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Peasant_Attack_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 12
+        width: 34
+        height: 31
+      alignment: 9
+      pivot: {x: 0.3885084, y: 0.41798925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeabe0b7376ca4f408395a6b5838b495
+      internalID: 1000259260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Peasant_Attack_2
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 12
+        width: 35
+        height: 30
+      alignment: 9
+      pivot: {x: 0.2334004, y: 0.4319615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 242735a9ad46cbd47ac320b818f7c5d4
+      internalID: -1844935174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -125,7 +188,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Enemy_Peasant_Attack_2: -1844935174
+      Enemy_Peasant_Attack_0: -1169255387
+      Enemy_Peasant_Attack_1: 1000259260
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator animator;
-    public LayerMask enemyLayers;
+    [SerializeField] public LayerMask ground;
     [SerializeField] private GameObject Attack_Hitbox;
 
     private bool clickedJump = false;
@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
         hitbox = Attack_Hitbox.GetComponent<Collider2D>();
+        
     }
 
     void Update()
@@ -137,8 +138,11 @@ public class Player : MonoBehaviour
     void checkGround()
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
-        isGrounded = colliders.Length > 1;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
+        //print(colliders.Length);
+        //foreach (var col in colliders)
+        //    print(col.gameObject.layer);
+        isGrounded = colliders.Length >= 1;
     }
     void Flip()
     {
@@ -201,6 +205,11 @@ public class Player : MonoBehaviour
     {
         Attack_Hitbox.SetActive(true);
         Attack_Hitbox.transform.localScale += new Vector3(0.0001f, 0, 0);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 0.1f);
     }
 }
 

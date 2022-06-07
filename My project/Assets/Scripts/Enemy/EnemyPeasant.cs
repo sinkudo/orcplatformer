@@ -15,7 +15,8 @@ public class EnemyPeasant : MovingEnemy
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         groundPoint = transform.Find("groundPoint");
-
+        health = GetComponent<Health>();
+        PlayerHealth = GameObject.Find("Player").GetComponent<Health>();
     }
     protected override void Attack()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float hp;
+    //[SerializeField] private float hp;
     private float ragePool;
     private float damage = 33f;
 
@@ -33,8 +33,6 @@ public class Player : MonoBehaviour
     private float Damage = 33f;
     private float timeForCombo = 0f;
     private int combocnt = 0;
-
-    //Player_Attack hitbox;
 
     Vector2 vmove;
     private Player_State state
@@ -136,9 +134,6 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
-        //print(colliders.Length);
-        //foreach (var col in colliders)
-        //    print(col.gameObject.layer);
         isGrounded = colliders.Length >= 1;
     }
     void Flip()
@@ -208,13 +203,13 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 0.1f);
     }
-    public void TakeDamage(float _damage)
-    {
-        print("player poluchi");
-        hp -= _damage;
-        if (hp <= 0)
-            Destroy(gameObject);
-    }
+    //public void TakeDamage(float _damage)
+    //{
+    //    print("player poluchi");
+    //    hp -= _damage;
+    //    if (hp <= 0)
+    //        Destroy(gameObject);
+    //}
 }
 
 public enum Player_State

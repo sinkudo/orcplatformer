@@ -57,25 +57,12 @@ public abstract class MovingEnemy : Enemy
         }
         if (justAttacked)
         {
-            print(currentDelay);
-            currentDelay += Time.deltaTime;
-            if(currentDelay >= attackDelay)
-            {
-                justAttacked = false;
-                currentDelay = 0;
-            }
+            afterAttackChill();
             return;
         }
         if (reachedPoint && !inSight)
         {
-            stayTime += Time.deltaTime;
-            animator.SetTrigger("Enemy_Idle");
-            rb.velocity = Vector2.zero;
-            if (stayTime >= 1f)
-            {
-                stayTime = 0f;
-                reachedPoint = false;
-            }
+            afterReachPointChill();
             return;
         }
         if (inSight && !PlayerInAttackRange)
@@ -84,9 +71,29 @@ public abstract class MovingEnemy : Enemy
             backToStartPos();
         else Patrol();
     }
+    protected void afterReachPointChill()
+    {
+        stayTime += Time.deltaTime;
+        animator.SetTrigger("Enemy_Idle");
+        rb.velocity = Vector2.zero;
+        if (stayTime >= 1f)
+        {
+            stayTime = 0f;
+            reachedPoint = false;
+        }
+    }
+    protected void afterAttackChill()
+    {
+        currentDelay += Time.deltaTime;
+        if (currentDelay >= attackDelay)
+        {
+            justAttacked = false;
+            currentDelay = 0;
+        }
+    }
     protected IEnumerator doAttack()
     {
-        print("attack");
+        //print("attack");
         animator.SetTrigger("Enemy_Attack");
         //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSeconds(0.65f);
@@ -95,7 +102,7 @@ public abstract class MovingEnemy : Enemy
         isAttacking = false;
         justAttacked = true;
         PlayerInAttackRange = false;
-        print(justAttacked);
+        //print(justAttacked);
     }
     private void OnDrawGizmos()
     {
@@ -108,7 +115,7 @@ public abstract class MovingEnemy : Enemy
     }
     protected void StartHunting()
     {
-        print("hunt");
+        //print("hunt");
         if (PlayerInAttackRange)
             return;
         animator.SetTrigger("Enemy_Move");
@@ -150,7 +157,7 @@ public abstract class MovingEnemy : Enemy
     }
     protected void Patrol()
     {
-        print("patrol");
+        //print("patrol");
         if ((int)Vector2.Distance(transform.position, patrolPoint) <= 1)
         {
             reachedPoint = true;
@@ -164,15 +171,14 @@ public abstract class MovingEnemy : Enemy
         Flip(patrolPoint);
         //Flip();
     }
-    protected void DealDamage()
-    {
-        player.TakeDamage(damage);
-    }
+    //protected void DealDamage()
+    //{
+    //    player.TakeDamage(damage);
+    //}
     void checkGround()
     {
         Debug.DrawLine(groundPoint.position, groundPoint.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position, 0.1f, ground);
         isGrounded = colliders.Length >= 1;
-        print(colliders.Length);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float hp;
+    //[SerializeField] protected float hp;
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
     [SerializeField] protected float agroDist;
@@ -14,7 +14,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected Player player;
     protected Rigidbody2D rb;
     protected Vector3 startPos;
-    
+    protected Health health;
     [SerializeField] private Material matBlink;
     [SerializeField] private Material matDefault;
     void Start()
@@ -33,10 +33,12 @@ public abstract class Enemy : MonoBehaviour
             StartCoroutine(blink());
             float push = player.getPlayerDirection() ? 2f : -2f;
             rb.AddForce(new Vector2(push, 4f), ForceMode2D.Impulse);
-            hp -= player.getPlayerDamage();
+            //print(player.getPlayerDamage());
+            health.TakeDamage(1);
+            //hp -= player.getPlayerDamage();
         }
-        if (hp <= 0)
-            Destroy(gameObject);
+        //if (hp <= 0)
+        //    Destroy(gameObject);
     }
     private IEnumerator blink()
     {

@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
         //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //Vector3Int tilepos = grid.WorldToCell(pos);
         //tilemap.SetTile(tilepos, tile);
-        //isGrounded = colliders.Length >= 1;
+        isGrounded = colliders.Length >= 1;
     }  
     void Flip()
     {

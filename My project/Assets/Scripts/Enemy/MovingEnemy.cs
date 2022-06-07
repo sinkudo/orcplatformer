@@ -135,11 +135,6 @@ public abstract class MovingEnemy : Enemy
         rb.velocity = new Vector2(speed * moveX, rb.velocity.y);
         Flip(startPos);
     }
-    protected float Destination(Vector3 target)
-    {
-        float movex = transform.position.x < target.x ? 1f : -1f;
-        return movex;
-    }
     protected void Flip(Vector3 target)
     {
         Vector3 enemypos = transform.position;

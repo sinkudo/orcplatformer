@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Tilemaps;
 public class Health : MonoBehaviour
 {
     [SerializeField] public float startingHealth;
     private Animator animator;
+    
     public float curHealth { get; private set; }
     void Start()
     {
@@ -19,7 +20,9 @@ public class Health : MonoBehaviour
         {
             animator.SetBool("Dead", true);
             if (GetComponent<Player>() != null)
+            {
                 GetComponent<Player>().enabled = false;
+            }
             if (GetComponent<Enemy>() != null)
             {
                 GetComponent<Enemy>().enabled = false;
@@ -28,10 +31,13 @@ public class Health : MonoBehaviour
             //Destroy(gameObject);
         }
     }
+    //public void TakeDamage(float _damage, float moveX)
+    //{
+        
+    //}
     // Update is called once per frame
     void Update()
     {
-        print(curHealth);
         if (Input.GetKeyDown(KeyCode.F))
             TakeDamage(1);
     }

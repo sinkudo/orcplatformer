@@ -114,13 +114,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0089e27de5c52b4c9cda08417120168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
   speed: 4
   jumpForce: 7
   ground:
     serializedVersion: 2
     m_Bits: 8
   Attack_Hitbox: {fileID: 1340129930514210800}
+  Damage: 1
   dashPower: 10
   dashTime: 0.5
   dashCooldown: 1

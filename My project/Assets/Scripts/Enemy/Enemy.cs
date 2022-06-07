@@ -35,9 +35,9 @@ public abstract class Enemy : MonoBehaviour
         {
             StartCoroutine(blink());
             float push = player.getPlayerDirection() ? 2f : -2f;
-            rb.AddForce(new Vector2(push, 4f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(push, 2f), ForceMode2D.Impulse);
             //print(player.getPlayerDamage());
-            health.TakeDamage(1);
+            health.TakeDamage(player.getPlayerDamage());
             //hp -= player.getPlayerDamage();
         }
         //if (hp <= 0)
@@ -49,9 +49,26 @@ public abstract class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         sprite.material = matDefault;
     }
+    private IEnumerator playerblink()
+    {
+        player.sprite.material = matBlink;
+        yield return new WaitForSeconds(0.1f);
+        player.sprite.material = matDefault;
+    }
+    protected float Destination(Vector3 target)
+    {
+        float movex = transform.position.x < target.x ? 1f : -1f;
+        return movex;
+    }
     protected void DamagePlayer()
     {
         if (PlayerInAttackRange && !player.isInvincible)
+        {
+            StartCoroutine(playerblink());
+            float push = Mathf.Sign(Destination(player.transform.position)) * 2f;
+            player.rb.AddForce(new Vector2(push, 4f), ForceMode2D.Impulse);
             PlayerHealth.TakeDamage(damage);
+            //PlayerHealth.TakeDamage(damage, Destination(transform.position));
+        }
     }
 }

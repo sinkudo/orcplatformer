@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Player Srt Layer
+    uniqueID: 292321015
+    locked: 0
+  - name: Enemy Srt Layer
+    uniqueID: 4048047673
+    locked: 0

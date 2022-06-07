@@ -20,7 +20,10 @@ public abstract class MovingEnemy : Enemy
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask ground;
     protected bool isGrounded = true;
-    protected Transform groundPoint;
+    protected bool shouldTurn = false;
+    public bool isInWall = false;
+    [SerializeField] protected float attackAnimationTime;
+    //protected bool isInfrontCliff = false;
 
     protected override void Attack()
     {
@@ -32,7 +35,8 @@ public abstract class MovingEnemy : Enemy
         gameobjPlayer = GameObject.Find("Player");
         player = gameobjPlayer.GetComponent<Player>();
         startPos = new Vector3(transform.position.x + 1, transform.position.y);
-        patrolPoint = new Vector3((int)Random.Range(-5f, 5f) + startPos.x, startPos.y);
+        //patrolPoint = new Vector3((int)Random.Range(-5f, 5f) + startPos.x, startPos.y);
+        spawnNewPoint(-5, 5);
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         groundPoint = transform.Find("groundPoint");
@@ -59,7 +63,11 @@ public abstract class MovingEnemy : Enemy
             return;
         }
         if (inSight && !PlayerInAttackRange)
+        {
+            if (isCliff())
+                return;
             StartHunting();
+        }
         else if (mustGoHome)
             backToStartPos();
         else Patrol();
@@ -73,6 +81,13 @@ public abstract class MovingEnemy : Enemy
         {
             stayTime = 0f;
             reachedPoint = false;
+
+            if (shouldTurn)
+            {
+                Flip();
+                isInWall = false;
+                shouldTurn = false;
+            }
         }
     }
     protected void afterAttackChill()
@@ -89,18 +104,18 @@ public abstract class MovingEnemy : Enemy
         //print("attack");
         animator.SetTrigger("Enemy_Attack");
         //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        yield return new WaitForSeconds(0.65f);
-        //Attack_Hitbox.SetActive(false);
+        yield return new WaitForSeconds(attackAnimationTime);
         animator.SetTrigger("Enemy_Idle");
         isAttacking = false;
         justAttacked = true;
         PlayerInAttackRange = false;
-        //print(justAttacked);
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(patrolPoint, 0.3f);
+        float moveX = transform.localScale.x;
+        Gizmos.DrawSphere(groundPoint.position + new Vector3(moveX, 0), 0.2f);
     }
     public void Move(float _speed)
     {
@@ -109,20 +124,25 @@ public abstract class MovingEnemy : Enemy
     protected void StartHunting()
     {
         //print("hunt");
-        if (PlayerInAttackRange)
+        if (PlayerInAttackRange || isCliff())
             return;
         animator.SetTrigger("Enemy_Move");
         chasing = true;
         float moveX = Destination(player.transform.position);
         moveHorizontal = moveX;
         Flip(player.transform.position);
+        if (isCliff())
+        {
+            animator.SetTrigger("Enemy_Idle");
+            moveX = 0;
+        }
         rb.velocity = new Vector2(speed * moveX, rb.velocity.y);
         var d = player.transform.position - transform.position;
         mustGoHome = true;
     }
     protected void backToStartPos()
     {
-        print("home");
+        //print("home");
         if((int)Vector2.Distance(transform.position, startPos) <= 2)
         {
             mustGoHome = false;
@@ -143,30 +163,74 @@ public abstract class MovingEnemy : Enemy
                 enemypos.x > target.x && transform.localScale.x == 1)
                 transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
     }
+    protected void Flip()
+    {
+        transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+    }
     protected void Patrol()
     {
-        //print("patrol");
+        //print(isInWall);
+        float moveX = transform.localScale.x;
+        if ((isCliff() || isInWall) && !shouldTurn)
+        {
+            reachedPoint = true;
+            if (moveX < 0)
+            {
+                //patrolPoint = new Vector3((int)Random.Range(0, 5f) + startPos.x, startPos.y);
+                spawnNewPoint(0, 5f);
+                //print("spawn right");
+                
+            }
+            else
+            {
+                //print("spawn left");
+                //patrolPoint = new Vector3((int)Random.Range(-5f, 0) + startPos.x, startPos.y);
+                spawnNewPoint(-5f, 0);
+            }
+            //Flip();
+            //Move(speed);
+            shouldTurn = true;
+            reachedPoint = true;
+            return;
+        }
         if ((int)Vector2.Distance(transform.position, patrolPoint) <= 1)
         {
             reachedPoint = true;
-            patrolPoint = new Vector3((int)Random.Range(-5f, 5f) + startPos.x, startPos.y);
+            //patrolPoint = new Vector3((int)Random.Range(-5f, 5f) + startPos.x, startPos.y);
+            //print("spawn plain");
+            spawnNewPoint(-5, 5);
             return;
         }
         animator.SetTrigger("Enemy_Move");
-        float moveX = Destination(patrolPoint);
         moveHorizontal = moveX;
         Move(speed * moveHorizontal);
-        Flip(patrolPoint);
-        //Flip();
+        //Flip(patrolPoint);
+        float PointX = patrolPoint.x;
+        float PositionX = transform.position.x;
+        moveX = transform.localScale.x;
+        if (!(PositionX < PointX && moveX == 1 || PositionX > PointX && moveX == -1))
+            Flip();
     }
-    //protected void DealDamage()
-    //{
-    //    player.TakeDamage(damage);
-    //}
+    protected void spawnNewPoint(float a, float b)
+    {
+        patrolPoint = new Vector3((int)Random.Range(a, b) + startPos.x, startPos.y);
+    }
     void checkGround()
     {
         Debug.DrawLine(groundPoint.position, groundPoint.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position, 0.1f, ground);
         isGrounded = colliders.Length >= 1;
+    }
+    bool isCliff()
+    {
+        float moveX = transform.localScale.x;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position + new Vector3(moveX, 0), 0.1f, ground);
+        //print(colliders.Length);
+        return colliders.Length == 0;
+        //isInfrontCliff = true;
+    }
+    public LayerMask getGround()
+    {
+        return ground;
     }
 }

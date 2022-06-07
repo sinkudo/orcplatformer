@@ -7,18 +7,20 @@ public abstract class Enemy : MonoBehaviour
     //[SerializeField] protected float hp;
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
-    [SerializeField] protected float agroDist;
     protected bool facingRight = true;
     protected GameObject gameobjPlayer;
     protected SpriteRenderer sprite;
     [SerializeField] protected Player player;
-    protected Rigidbody2D rb;
+    public Rigidbody2D rb;
     protected Vector3 startPos;
     protected Health health;
     [SerializeField] private Material matBlink;
     [SerializeField] private Material matDefault;
     protected Health PlayerHealth;
     public bool PlayerInAttackRange = false;
+    public bool canDamage = false;
+    public bool isDead = false;
+    [SerializeField] public Transform groundPoint;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,7 +37,7 @@ public abstract class Enemy : MonoBehaviour
         {
             StartCoroutine(blink());
             float push = player.getPlayerDirection() ? 2f : -2f;
-            rb.AddForce(new Vector2(push, 2f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(push, 1f), ForceMode2D.Impulse);
             //print(player.getPlayerDamage());
             health.TakeDamage(player.getPlayerDamage());
             //hp -= player.getPlayerDamage();
@@ -62,7 +64,7 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void DamagePlayer()
     {
-        if (PlayerInAttackRange && !player.isInvincible)
+        if (PlayerInAttackRange && !player.isInvincible && canDamage)
         {
             StartCoroutine(playerblink());
             float push = Mathf.Sign(Destination(player.transform.position)) * 2f;
@@ -70,5 +72,14 @@ public abstract class Enemy : MonoBehaviour
             PlayerHealth.TakeDamage(damage);
             //PlayerHealth.TakeDamage(damage, Destination(transform.position));
         }
+    }
+    public void checkDeath()
+    {
+        if (isDead)
+            Destroy(gameObject);
+    }
+    public void stopMovement()
+    {
+        rb.velocity = Vector2.zero;
     }
 }

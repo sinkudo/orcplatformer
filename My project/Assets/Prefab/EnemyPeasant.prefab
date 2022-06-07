@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390345207898701485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.002, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,6 +397,8 @@ MonoBehaviour:
   matBlink: {fileID: 2100000, guid: e24b861833a8a324eb4247e9bd64c022, type: 2}
   matDefault: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   PlayerInAttackRange: 0
+  canDamage: 0
+  groundPoint: {fileID: 1390345207898701486}
   mustGoHome: 0
   reachedPoint: 0
   inSight: 0
@@ -442,3 +444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+  ground:
+    serializedVersion: 2
+    m_Bits: 8

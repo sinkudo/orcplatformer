@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     private float timeForCombo = 0f;
     private int combocnt = 0;
     //[SerializeField] private Tilemap tilemap;
-    //[SerializeField] private GridLayout grid;
+    [SerializeField] private GridLayout grid;
     //[SerializeField] Tile tile;
     public bool isInvincible { get; private set; }
 
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(!isAttacking && combocnt > 0)
+        if (!isAttacking && combocnt > 0)
             timeForCombo += Time.deltaTime;
         if (timeForCombo >= 1f)
         {
@@ -76,11 +76,11 @@ public class Player : MonoBehaviour
 
         if (!clickedJump && Input.GetButtonDown("Jump") && isGrounded)
             clickedJump = true;
-     
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
 
-        if(Input.GetKeyDown(KeyCode.Z) && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.Z) && !isAttacking)
         {
             isAttacking = true;
             if (combocnt == 0)
@@ -111,9 +111,9 @@ public class Player : MonoBehaviour
         if (isGrounded && !isAttacking)
             state = Player_State.Idle;
     }
-    public  void Move()
+    public void Move()
     {
-        if(isGrounded && !isAttacking) state = Player_State.Run;
+        if (isGrounded && !isAttacking) state = Player_State.Run;
 
         rb.velocity = new Vector2(moveHorizontal * speed, rb.velocity.y);
     }
@@ -143,7 +143,8 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
-        //Vector3Int cellpos = grid.WorldToCell(transform.position);
+        //print(transform.position);
+        Vector3Int cellpos = grid.WorldToCell(transform.position - Vector3Int.down);
         //print(tilemap.GetTile(cellpos).name);
         //tilemap.SetTile(cellpos, null);
         //tilemap.SetTile(cellpos, )
@@ -153,12 +154,13 @@ public class Player : MonoBehaviour
         //// get the collision point of the ray with the z = 0 plane
         //Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         //Vector3Int position = grid.WorldToCell(worldPoint);
-           
-        //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Vector3Int tilepos = grid.WorldToCell(pos);
+
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int tilepos = grid.WorldToCell(pos);
+        //print(tilepos + " " + cellpos);
         //tilemap.SetTile(tilepos, tile);
         isGrounded = colliders.Length >= 1;
-    }  
+    }
     void Flip()
     {
         facingRight = !facingRight;
@@ -193,7 +195,7 @@ public class Player : MonoBehaviour
             isAttacking = true;
             state = Player_State.Attack;
             Attack_Hitbox.SetActive(true);
-            
+
             yield return new WaitForSeconds(0.3f);
             Attack_Hitbox.SetActive(false);
             isAttacking = false;
@@ -227,6 +229,14 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 0.1f);
+    }
+    public IEnumerator blink()
+    {
+        Material matDefault = sprite.material;
+        Material matBlink = Resources.Load("Flash") as Material;
+        sprite.material = matBlink;
+        yield return new WaitForSeconds(0.1f);
+        sprite.material = matDefault;
     }
 }
 

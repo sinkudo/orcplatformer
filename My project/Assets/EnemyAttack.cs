@@ -19,11 +19,14 @@ public class EnemyAttack : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
+        {
+            enem.canDamage = true;
             enem.PlayerInAttackRange = true;
+        }
     }
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.name == "Player")
-    //        enem.PlayerInAttackRange = false;
-    //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+            enem.canDamage = false;
+    }
 }

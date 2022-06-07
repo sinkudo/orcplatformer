@@ -20,7 +20,6 @@ public abstract class MovingEnemy : Enemy
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask ground;
     protected bool isGrounded = true;
-    protected Transform groundPoint;
 
     protected override void Attack()
     {
@@ -168,5 +167,9 @@ public abstract class MovingEnemy : Enemy
         Debug.DrawLine(groundPoint.position, groundPoint.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position, 0.1f, ground);
         isGrounded = colliders.Length >= 1;
+    }
+    void checkCliff()
+    {
+
     }
 }

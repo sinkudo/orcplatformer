@@ -19,6 +19,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private Material matDefault;
     protected Health PlayerHealth;
     public bool PlayerInAttackRange = false;
+    public bool canDamage = false;
+    [SerializeField] public Transform groundPoint;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -62,7 +64,7 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void DamagePlayer()
     {
-        if (PlayerInAttackRange && !player.isInvincible)
+        if (PlayerInAttackRange && !player.isInvincible && canDamage)
         {
             StartCoroutine(playerblink());
             float push = Mathf.Sign(Destination(player.transform.position)) * 2f;
@@ -70,5 +72,9 @@ public abstract class Enemy : MonoBehaviour
             PlayerHealth.TakeDamage(damage);
             //PlayerHealth.TakeDamage(damage, Destination(transform.position));
         }
+    }
+    public void stopMovement()
+    {
+        rb.velocity = Vector2.zero;
     }
 }

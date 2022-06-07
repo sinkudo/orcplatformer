@@ -33,15 +33,17 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void Attack();
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDead)
-            return;
         if (collision.gameObject.name == "Attack_Hitbox" && gameObject.layer == 6)
         {
             StartCoroutine(blink());
             float push = player.getPlayerDirection() ? 2f : -2f;
             rb.AddForce(new Vector2(push, 1f), ForceMode2D.Impulse);
+            //print(player.getPlayerDamage());
             health.TakeDamage(player.getPlayerDamage());
+            //hp -= player.getPlayerDamage();
         }
+        //if (hp <= 0)
+        //    Destroy(gameObject);
     }
     private IEnumerator blink()
     {

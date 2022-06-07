@@ -123,7 +123,7 @@ public abstract class MovingEnemy : Enemy
     }
     protected void StartHunting()
     {
-        print("hunt" + " " + PlayerInAttackRange);
+        //print("hunt");
         if (PlayerInAttackRange || isCliff())
             return;
         animator.SetTrigger("Enemy_Move");

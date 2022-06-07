@@ -6,6 +6,10 @@ public class Health : MonoBehaviour
 {
     [SerializeField] public float startingHealth;
     private Animator animator;
+    //[SerializeField] private GridLayout grid;
+    //[SerializeField] private Tilemap tilemap;
+    //private GridLayout grid;
+    //private Tilemap tilemap;
     [SerializeField] private LayerMask ground;
     
     public float curHealth { get; private set; }
@@ -27,14 +31,14 @@ public class Health : MonoBehaviour
             if (GetComponent<Enemy>() != null)
             {
                 Enemy enemy = GetComponent<Enemy>();
-                DropCoins drop = GetComponent<DropCoins>();
-                drop.spawnCoins();
-                enemy.isDead = true;
                 RaycastHit2D[] rays = Physics2D.RaycastAll(enemy.groundPoint.position, new Vector2(0, -1f), ground);
+                print(rays.Length);
+                print(rays[0].transform.position);
                 tileDestroy destr = GameObject.Find("Grid").GetComponentInChildren<tileDestroy>();
                 enemy.enabled = false;
                 destr.DestroyTile(rays[0].transform.position, transform.localScale.x);
                 enemy.stopMovement();
+                //print(enemy.rb.velocity);
                 enemy.enabled = false;
                 StartCoroutine(DeathAnim(enemy));
             }

@@ -145,6 +145,22 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
+        //print(transform.position);
+        Vector3Int cellpos = grid.WorldToCell(transform.position - Vector3Int.down);
+        //print(tilemap.GetTile(cellpos).name);
+        //tilemap.SetTile(cellpos, null);
+        //tilemap.SetTile(cellpos, )
+        //print(cellpos);
+        //Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //// get the collision point of the ray with the z = 0 plane
+        //Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
+        //Vector3Int position = grid.WorldToCell(worldPoint);
+
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int tilepos = grid.WorldToCell(pos);
+        //print(tilepos + " " + cellpos);
+        //tilemap.SetTile(tilepos, tile);
         isGrounded = colliders.Length >= 1;
     }
     void Flip()

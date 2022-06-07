@@ -15,7 +15,7 @@ TagManager:
   - Enemy
   - Player
   - Sight
-  - Drop
+  - 
   - 
   - 
   - 
@@ -47,7 +47,4 @@ TagManager:
     locked: 0
   - name: Enemy Srt Layer
     uniqueID: 4048047673
-    locked: 0
-  - name: Drop
-    uniqueID: 2335291973
     locked: 0

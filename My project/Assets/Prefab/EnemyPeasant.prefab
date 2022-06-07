@@ -393,6 +393,7 @@ MonoBehaviour:
   damage: 1
   speed: 2
   player: {fileID: 0}
+  rb: {fileID: 0}
   matBlink: {fileID: 2100000, guid: e24b861833a8a324eb4247e9bd64c022, type: 2}
   matDefault: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   PlayerInAttackRange: 0

@@ -389,13 +389,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d396b15704f8054789bedf382aa8da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  damage: 10
+  damage: 1
   speed: 2
   agroDist: 2
   player: {fileID: 0}
   matBlink: {fileID: 2100000, guid: e24b861833a8a324eb4247e9bd64c022, type: 2}
   matDefault: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  PlayerInAttackRange: 0
   mustGoHome: 0
   reachedPoint: 0
   inSight: 0
@@ -408,7 +408,6 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 8
-  PlayerInAttackRange: 0
 --- !u!95 &8272856112562735666
 Animator:
   serializedVersion: 4

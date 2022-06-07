@@ -17,6 +17,8 @@ public abstract class Enemy : MonoBehaviour
     protected Health health;
     [SerializeField] private Material matBlink;
     [SerializeField] private Material matDefault;
+    protected Health PlayerHealth;
+    public bool PlayerInAttackRange = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,6 +26,7 @@ public abstract class Enemy : MonoBehaviour
         player = gameobjPlayer.GetComponent<Player>();
         startPos = transform.position;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        health = GetComponent<Health>();
     }
     protected abstract void Attack();
     private void OnTriggerEnter2D(Collider2D collision)
@@ -45,5 +48,10 @@ public abstract class Enemy : MonoBehaviour
         sprite.material = matBlink;
         yield return new WaitForSeconds(0.1f);
         sprite.material = matDefault;
+    }
+    protected void DamagePlayer()
+    {
+        if (PlayerInAttackRange && !player.isInvincible)
+            PlayerHealth.TakeDamage(damage);
     }
 }

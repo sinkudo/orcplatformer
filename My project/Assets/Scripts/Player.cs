@@ -19,17 +19,19 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Attack_Hitbox;
     [SerializeField] private float Damage;
     private Health health;
+    //public int Coins { get; private set; }
 
     private bool clickedJump = false;
     private bool holdingJump = false;
 
-    private bool facingRight = true;
+    public bool facingRight { get; private set; }
 
     private bool canDash = true;
     private bool isDashing = false;
     [SerializeField] private float dashPower;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
+    
 
     private bool canAttack = true;
     private bool isAttacking = false;
@@ -37,6 +39,8 @@ public class Player : MonoBehaviour
     private int combocnt = 0;
     //[SerializeField] private Tilemap tilemap;
     [SerializeField] private GridLayout grid;
+    [SerializeField] private LayerMask CoinLayer;
+
     //[SerializeField] Tile tile;
     public bool isInvincible { get; private set; }
 
@@ -48,7 +52,9 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        //Coins = 0;
 
+        facingRight = true;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -145,6 +151,7 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
+        print(ground);
         isGrounded = colliders.Length >= 1;
     }
     void Flip()
@@ -224,6 +231,24 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         sprite.material = matDefault;
     }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == CoinLayer)
+    //    {
+    //        Coins++;
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    //print(collision.gameObject.name + " " + collision.gameObject.layer + " " + CoinLayer + " " + ground);
+    //    if (collision.gameObject.layer == 9)
+    //    {
+    //        print("123");
+    //        Coins++;
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 }
 
 public enum Player_State

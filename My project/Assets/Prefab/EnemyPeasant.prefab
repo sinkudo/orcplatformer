@@ -314,7 +314,6 @@ GameObject:
   - component: {fileID: 5837569223684331898}
   - component: {fileID: 8272856112562735671}
   - component: {fileID: 8272856112562735666}
-  - component: {fileID: 555774634388986315}
   m_Layer: 6
   m_Name: EnemyPeasant
   m_TagString: Untagged
@@ -390,7 +389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d396b15704f8054789bedf382aa8da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  hp: 100
+  damage: 10
   speed: 2
   agroDist: 2
   player: {fileID: 0}
@@ -429,16 +429,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &555774634388986315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4212715853193113640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37aa73ce311ca934c82ae0d4e883ea47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 3

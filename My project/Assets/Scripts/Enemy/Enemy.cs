@@ -7,7 +7,6 @@ public abstract class Enemy : MonoBehaviour
     //[SerializeField] protected float hp;
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
-    [SerializeField] protected float agroDist;
     protected bool facingRight = true;
     protected GameObject gameobjPlayer;
     protected SpriteRenderer sprite;
@@ -20,6 +19,7 @@ public abstract class Enemy : MonoBehaviour
     protected Health PlayerHealth;
     public bool PlayerInAttackRange = false;
     public bool canDamage = false;
+    public bool isDead = false;
     [SerializeField] public Transform groundPoint;
     void Start()
     {
@@ -72,6 +72,11 @@ public abstract class Enemy : MonoBehaviour
             PlayerHealth.TakeDamage(damage);
             //PlayerHealth.TakeDamage(damage, Destination(transform.position));
         }
+    }
+    public void checkDeath()
+    {
+        if (isDead)
+            Destroy(gameObject);
     }
     public void stopMovement()
     {

@@ -23,10 +23,14 @@ public class EnemyAttack : MonoBehaviour
             enem.canDamage = true;
             enem.PlayerInAttackRange = true;
         }
+        if (collision.gameObject.layer == enem.getGround())
+            enem.isInWall = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Player")
             enem.canDamage = false;
+        if (collision.gameObject.layer == enem.getGround())
+            enem.isInWall = false;
     }
 }

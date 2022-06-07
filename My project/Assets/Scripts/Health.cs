@@ -37,13 +37,14 @@ public class Health : MonoBehaviour
                 destr.DestroyTile(rays[0].transform.position, transform.localScale.x);
                 enemy.stopMovement();
                 enemy.enabled = false;
-                StartCoroutine(DeathAnim());
+                StartCoroutine(DeathAnim(enemy));
             }
         }
     }
-    private IEnumerator DeathAnim()
+    private IEnumerator DeathAnim(Enemy enemy)
     {
         yield return new WaitForSeconds(0.5f);
+        enemy.isDead = true;
         Destroy(gameObject);
     }
     private void OnDrawGizmos()

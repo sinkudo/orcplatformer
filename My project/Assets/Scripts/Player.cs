@@ -154,10 +154,10 @@ public class Player : MonoBehaviour
         //Vector3 worldPoint = ray.GetPoint(-ray.origin.z / ray.direction.z);
         //Vector3Int position = grid.WorldToCell(worldPoint);
            
-        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int tilepos = grid.WorldToCell(pos);
-        tilemap.SetTile(tilepos, tile);
-        isGrounded = colliders.Length >= 1;
+        //Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector3Int tilepos = grid.WorldToCell(pos);
+        //tilemap.SetTile(tilepos, tile);
+        //isGrounded = colliders.Length >= 1;
     }  
     void Flip()
     {

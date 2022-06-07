@@ -22,6 +22,7 @@ public abstract class MovingEnemy : Enemy
     protected bool isGrounded = true;
     protected bool shouldTurn = false;
     public bool isInWall = false;
+    [SerializeField] protected float attackAnimationTime;
     //protected bool isInfrontCliff = false;
 
     protected override void Attack()
@@ -80,9 +81,11 @@ public abstract class MovingEnemy : Enemy
         {
             stayTime = 0f;
             reachedPoint = false;
+
             if (shouldTurn)
             {
                 Flip();
+                isInWall = false;
                 shouldTurn = false;
             }
         }
@@ -101,7 +104,7 @@ public abstract class MovingEnemy : Enemy
         //print("attack");
         animator.SetTrigger("Enemy_Attack");
         //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        yield return new WaitForSeconds(0.65f);
+        yield return new WaitForSeconds(attackAnimationTime);
         animator.SetTrigger("Enemy_Idle");
         isAttacking = false;
         justAttacked = true;
@@ -120,7 +123,7 @@ public abstract class MovingEnemy : Enemy
     }
     protected void StartHunting()
     {
-        print("hunt");
+        //print("hunt");
         if (PlayerInAttackRange || isCliff())
             return;
         animator.SetTrigger("Enemy_Move");
@@ -166,25 +169,24 @@ public abstract class MovingEnemy : Enemy
     }
     protected void Patrol()
     {
-        //print("patrol");
+        //print(isInWall);
         float moveX = transform.localScale.x;
-        if (isCliff() && !shouldTurn)
+        if ((isCliff() || isInWall) && !shouldTurn)
         {
             reachedPoint = true;
             if (moveX < 0)
             {
                 //patrolPoint = new Vector3((int)Random.Range(0, 5f) + startPos.x, startPos.y);
                 spawnNewPoint(0, 5f);
-                print("spawn right");
+                //print("spawn right");
                 
             }
             else
             {
-                print("spawn left");
+                //print("spawn left");
                 //patrolPoint = new Vector3((int)Random.Range(-5f, 0) + startPos.x, startPos.y);
                 spawnNewPoint(-5f, 0);
             }
-
             //Flip();
             //Move(speed);
             shouldTurn = true;
@@ -195,7 +197,7 @@ public abstract class MovingEnemy : Enemy
         {
             reachedPoint = true;
             //patrolPoint = new Vector3((int)Random.Range(-5f, 5f) + startPos.x, startPos.y);
-            print("spawn plain");
+            //print("spawn plain");
             spawnNewPoint(-5, 5);
             return;
         }

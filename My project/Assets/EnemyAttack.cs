@@ -18,12 +18,13 @@ public class EnemyAttack : MonoBehaviour
     //}
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //print(collision.gameObject.layer);
         if (collision.gameObject.name == "Player")
         {
             enem.canDamage = true;
             enem.PlayerInAttackRange = true;
         }
-        if (collision.gameObject.layer == enem.getGround())
+        if (collision.gameObject.layer == 3)
             enem.isInWall = true;
     }
     private void OnTriggerExit2D(Collider2D collision)

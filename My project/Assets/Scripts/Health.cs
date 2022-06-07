@@ -31,11 +31,14 @@ public class Health : MonoBehaviour
             if (GetComponent<Enemy>() != null)
             {
                 Enemy enemy = GetComponent<Enemy>();
-                //RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, new Vector2(0, -1.5f), ground);
-                RaycastHit2D[] rays = Physics2D.RaycastAll(enemy.groundPoint.position, new Vector2(0, -0.1f), ground);
+                RaycastHit2D[] rays = Physics2D.RaycastAll(enemy.groundPoint.position, new Vector2(0, -1f), ground);
+                print(rays.Length);
+                print(rays[0].transform.position);
                 tileDestroy destr = GameObject.Find("Grid").GetComponentInChildren<tileDestroy>();
+                enemy.enabled = false;
                 destr.DestroyTile(rays[0].transform.position, transform.localScale.x);
                 enemy.stopMovement();
+                //print(enemy.rb.velocity);
                 enemy.enabled = false;
                 StartCoroutine(DeathAnim(enemy));
             }

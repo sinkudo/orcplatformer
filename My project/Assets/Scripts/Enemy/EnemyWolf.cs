@@ -18,5 +18,4 @@ public class EnemyWolf : MovingEnemy
         health = GetComponent<Health>();
         PlayerHealth = GameObject.Find("Player").GetComponent<Health>();
     }
-
 }

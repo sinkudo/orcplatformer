@@ -48,11 +48,13 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
-        isInvincible = false;
+        //isInvincible = false;
+        isInvincible = true;
         //tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         //grid = GameObject.Find("Grid").GetComponent<Grid>();
     }

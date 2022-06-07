@@ -11,7 +11,7 @@ public abstract class Enemy : MonoBehaviour
     protected GameObject gameobjPlayer;
     protected SpriteRenderer sprite;
     [SerializeField] protected Player player;
-    protected Rigidbody2D rb;
+    public Rigidbody2D rb;
     protected Vector3 startPos;
     protected Health health;
     [SerializeField] private Material matBlink;
@@ -37,7 +37,7 @@ public abstract class Enemy : MonoBehaviour
         {
             StartCoroutine(blink());
             float push = player.getPlayerDirection() ? 2f : -2f;
-            rb.AddForce(new Vector2(push, 2f), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(push, 1f), ForceMode2D.Impulse);
             //print(player.getPlayerDamage());
             health.TakeDamage(player.getPlayerDamage());
             //hp -= player.getPlayerDamage();

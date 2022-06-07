@@ -30,9 +30,11 @@ public class tileDestroy : MonoBehaviour
     public void DestroyTile(Vector3 pos, float x)
     {
         Vector3Int mPos = grid.WorldToCell(pos);
+        //mPos += Vector3Int.down + Vector3Int.down;
         mPos += Vector3Int.down;
-        print(tilemap.GetTile(mPos) + " " + mPos);
-        mPos.x -= (int)x;
+        //print(tilemap.GetTile(mPos).name + " " + mPos);
+        //mPos.x -= (int)x;
+        print(mPos);
         for (int i = 0; i <= 19; i++)
         {
             if (i == 4)

@@ -19,7 +19,6 @@ public abstract class MovingEnemy : Enemy
     [SerializeField] GameObject Attack_Hitbox;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask ground;
-    public bool PlayerInAttackRange = false;
     protected bool isGrounded = true;
     protected Transform groundPoint;
 
@@ -27,12 +26,6 @@ public abstract class MovingEnemy : Enemy
     {
         
     }
-    //private bool PlayerInAttackRange()
-    //{
-    //    RaycastHit2D hit = Physics2D.BoxCast(transform.position + new Vector3(1.25f, -0.47f), new Vector3(1, 0.5f), 0, Vector2.left, 0, playerLayer);
-    //    return hit.collider != null;
-    //}
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,7 +36,7 @@ public abstract class MovingEnemy : Enemy
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         groundPoint = transform.Find("groundPoint");
-        print(sprite);
+        health = GetComponent<Health>();
     }
     void Update()
     {

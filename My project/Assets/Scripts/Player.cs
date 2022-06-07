@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour
 {
     //[SerializeField] private float hp;
     private float ragePool;
     private float damage = 33f;
-    private Health health;
+
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     private bool isGrounded = false;
@@ -34,8 +33,6 @@ public class Player : MonoBehaviour
     private float Damage = 33f;
     private float timeForCombo = 0f;
     private int combocnt = 0;
-    private Tilemap tilemap;
-    public bool isInvincible{ get; private set; }
 
     Vector2 vmove;
     private Player_State state
@@ -49,8 +46,6 @@ public class Player : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
-        isInvincible = false;
-        tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
     }
 
     void Update()
@@ -139,9 +134,6 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
-        Vector3Int cellpos = tilemap.WorldToCell(transform.position);
-        print(cellpos);
-        //tilemap.SetColor((Vector3Int)transform.position, Color.red);
         isGrounded = colliders.Length >= 1;
     }
     void Flip()
@@ -155,7 +147,6 @@ public class Player : MonoBehaviour
     {
         if (canDash)
         {
-            isInvincible = true;
             state = Player_State.Dash;
             clickedJump = false;
             canDash = false;
@@ -168,7 +159,6 @@ public class Player : MonoBehaviour
             isDashing = false;
             yield return new WaitForSeconds(dashCooldown);
             canDash = true;
-            isInvincible = false;
         }
     }
     private IEnumerator Attack()

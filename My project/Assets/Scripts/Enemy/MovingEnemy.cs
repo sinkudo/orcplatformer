@@ -19,6 +19,7 @@ public abstract class MovingEnemy : Enemy
     [SerializeField] GameObject Attack_Hitbox;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask ground;
+    public bool PlayerInAttackRange = false;
     protected bool isGrounded = true;
     protected Transform groundPoint;
 
@@ -42,7 +43,7 @@ public abstract class MovingEnemy : Enemy
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         groundPoint = transform.Find("groundPoint");
-        health = GetComponent<Health>();
+        print(sprite);
     }
     void Update()
     {

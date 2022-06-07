@@ -30,14 +30,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float dashPower;
     [SerializeField] private float dashTime;
     [SerializeField] private float dashCooldown;
-    [SerializeField] Tile tile;
 
     private bool canAttack = true;
     private bool isAttacking = false;
     private float timeForCombo = 0f;
     private int combocnt = 0;
-    [SerializeField] private Tilemap tilemap;
-    [SerializeField] private GridLayout grid;
+    //[SerializeField] private Tilemap tilemap;
+    //[SerializeField] private GridLayout grid;
+    //[SerializeField] Tile tile;
     public bool isInvincible { get; private set; }
 
     Vector2 vmove;

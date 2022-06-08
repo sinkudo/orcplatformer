@@ -23,7 +23,6 @@ public class HealthBar : MonoBehaviour
     {
         if (totalHealthbar.fillAmount * 10 < playerHealth.startingHealth)
         {
-            print("zaletel");
             totalHealthbar.fillAmount = playerHealth.curHealth / 10;
         }
     }

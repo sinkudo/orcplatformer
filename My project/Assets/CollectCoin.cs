@@ -6,7 +6,7 @@ public class CollectCoin : MonoBehaviour
 {
     // Start is called before the first frame update
     Player player;
-    public int Coins { get; private set; }
+    public int Coins;
     void Start()
     {
         //player = GetComponentInParent<Player>();

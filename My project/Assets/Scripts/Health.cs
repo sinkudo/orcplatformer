@@ -50,11 +50,9 @@ public class Health : MonoBehaviour
     {
         Gizmos.DrawRay(transform.position, new Vector2(0, -1.5f));
     }
-    void Update()
+    public void UpgradeHealth()
     {
-        //if(grid == null)
-        //    GameObject.Find("Grid").GetComponent<Grid>();
-        //if(tilemap == null)
-        //    grid.GetComponentInChildren<Tilemap>();
+        startingHealth++;
+        curHealth = startingHealth;
     }
 }

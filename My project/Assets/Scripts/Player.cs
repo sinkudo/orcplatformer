@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     //[SerializeField] private Tilemap tilemap;
     [SerializeField] private GridLayout grid;
     [SerializeField] private LayerMask CoinLayer;
+    public GameObject DialogBox;
+    private bool isInteracting = false;
+    
 
     //[SerializeField] Tile tile;
     public bool isInvincible { get; private set; }
@@ -50,23 +53,30 @@ public class Player : MonoBehaviour
         get { return (Player_State)animator.GetInteger("State"); }
         set { animator.SetInteger("State", (int)value); }
     }
+    
     void Start()
     {
-        //Coins = 0;
-
         facingRight = true;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
         isInvincible = false;
-        //isInvincible = true;
-        //tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
-        //grid = GameObject.Find("Grid").GetComponent<Grid>();
     }
 
     void Update()
     {
+        
+        if (Input.GetKeyDown(KeyCode.I))
+            isInteracting = true;
+        else if (Input.GetKeyUp(KeyCode.I))
+            isInteracting = false;
+        if (DialogBox.activeSelf)
+        {
+            state = Player_State.Idle;
+            rb.velocity = Vector2.zero;
+            return;
+        }
         if (!isAttacking && combocnt > 0)
             timeForCombo += Time.deltaTime;
         if (timeForCombo >= 1f)
@@ -103,6 +113,12 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (DialogBox.activeSelf)
+        {
+            state = Player_State.Idle;
+            rb.velocity = Vector2.zero;
+            return;
+        }
         if (isDashing) return;
         if (moveHorizontal > 0 && !facingRight || moveHorizontal < 0 && facingRight) Flip();
 
@@ -230,24 +246,28 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         sprite.material = matDefault;
     }
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.layer == CoinLayer)
-    //    {
-    //        Coins++;
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    //print(collision.gameObject.name + " " + collision.gameObject.layer + " " + CoinLayer + " " + ground);
-    //    if (collision.gameObject.layer == 9)
-    //    {
-    //        print("123");
-    //        Coins++;
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
+    public void UpgradeDamage()
+    {
+        damage++;
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "NPC1" && isInteracting)
+        {
+            //GameObject g = GameObject.Find("DialogueBox");
+            DialogBox.SetActive(true);
+            DialogBox.GetComponent<Dialogue>().playDialog1();
+            DialogBox.GetComponent<Dialogue>().startedConv = true;
+            //GameObject.Find("DialogueBox").GetComponent<Dialogue>().playDialog1();
+        }
+        else if(other.gameObject.tag == "NPC2" && isInteracting)
+        {
+            DialogBox.SetActive(true);
+            DialogBox.GetComponent<Dialogue>().playDialog2();
+            DialogBox.GetComponent<Dialogue>().startedConv = true;
+            //GameObject.Find("DialogueBox").GetComponent<Dialogue>().playDialog2();
+        }
+    }
 }
 
 public enum Player_State

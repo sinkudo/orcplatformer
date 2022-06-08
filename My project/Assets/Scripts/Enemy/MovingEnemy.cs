@@ -176,19 +176,14 @@ public abstract class MovingEnemy : Enemy
             reachedPoint = true;
             if (moveX < 0)
             {
-                //patrolPoint = new Vector3((int)Random.Range(0, 5f) + startPos.x, startPos.y);
                 spawnNewPoint(0, 5f);
                 //print("spawn right");
                 
             }
             else
             {
-                //print("spawn left");
-                //patrolPoint = new Vector3((int)Random.Range(-5f, 0) + startPos.x, startPos.y);
                 spawnNewPoint(-5f, 0);
             }
-            //Flip();
-            //Move(speed);
             shouldTurn = true;
             reachedPoint = true;
             return;

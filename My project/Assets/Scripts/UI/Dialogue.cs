@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Dialogue : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
-    [SerializeField] private DialogueObj test;
+    
     public int cost1 = 10;
     public int cost2 = 10;
     [SerializeField] private GameObject npc1;

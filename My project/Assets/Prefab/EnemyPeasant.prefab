@@ -315,13 +315,14 @@ GameObject:
   - component: {fileID: 8272856112562735671}
   - component: {fileID: 8272856112562735666}
   - component: {fileID: 7890107736721168970}
+  - component: {fileID: 1214588860}
   m_Layer: 6
   m_Name: EnemyPeasant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2080902692908760199
 Transform:
   m_ObjectHideFlags: 0
@@ -450,3 +451,16 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &1214588860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212715853193113640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bcee1d867b05d45a7dae30d40755fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawn: {fileID: 8570303409832190993, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}

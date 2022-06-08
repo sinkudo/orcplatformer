@@ -59,8 +59,8 @@ public class Player : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
-        //isInvincible = false;
-        isInvincible = true;
+        isInvincible = false;
+        //isInvincible = true;
         //tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         //grid = GameObject.Find("Grid").GetComponent<Grid>();
     }
@@ -151,7 +151,6 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
-        print(ground);
         isGrounded = colliders.Length >= 1;
     }
     void Flip()

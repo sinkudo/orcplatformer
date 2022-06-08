@@ -14,7 +14,6 @@ public class HealthBar : MonoBehaviour
         //totalHealthbar.fillAmount = playerHealth.curHealth / 10; 
     }
 
-    // Update is called once per frame
     void Update()
     {
         setTotalHealthbar();

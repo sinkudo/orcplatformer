@@ -6209,11 +6209,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1889990184 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1340129929562777362, guid: cfb471b23612e9f49968ea0772f11488, type: 3}
-  m_PrefabInstance: {fileID: 1340129929958675582}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1959074867
 GameObject:
   m_ObjectHideFlags: 0
@@ -6330,25 +6325,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4383091834480632412, guid: cfb471b23612e9f49968ea0772f11488, type: 3}
   m_PrefabInstance: {fileID: 1340129929958675582}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889990184}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37aa73ce311ca934c82ae0d4e883ea47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1974763688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889990184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92bcee1d867b05d45a7dae30d40755fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 8570303409832190993, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
 --- !u!1 &1996762740
 GameObject:
   m_ObjectHideFlags: 0
@@ -7349,10 +7331,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyWolf
       objectReference: {fileID: 0}
-    - target: {fileID: 4441370251181931646, guid: 207f632592559ff4385b13c9bf405887, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 207f632592559ff4385b13c9bf405887, type: 3}
 --- !u!1001 &1340129929958675582
@@ -7471,10 +7449,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyPeasant
       objectReference: {fileID: 0}
-    - target: {fileID: 4212715853193113640, guid: 1a24f0300b691dc4a8827a978284f3d6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a24f0300b691dc4a8827a978284f3d6, type: 3}
 --- !u!1001 &5640266448837311597
@@ -7588,18 +7562,6 @@ PrefabInstance:
     - target: {fileID: 8570303409832190993, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
       propertyPath: m_Name
       value: Coin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8570303409832190993, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8570303409832191006, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8570303409832191006, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
-      propertyPath: m_Constraints
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8570303409832191007, guid: 1cf930512dbc5b74382b203b86aa76f1, type: 3}
       propertyPath: m_RootOrder

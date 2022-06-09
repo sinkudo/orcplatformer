@@ -18,6 +18,7 @@ public class Dialogue : MonoBehaviour
     public GameObject player;
     public GameObject btn1;
     private bool leave = true;
+    [SerializeField] Animator anim;
     private void Awake()
     {
         //btns = GameObject.Find()
@@ -63,6 +64,13 @@ public class Dialogue : MonoBehaviour
         if (leave)
             btn1.SetActive(false);
         StopAllCoroutines();
+        //anim.SetBool("isClosed", true);
+        //StartCoroutine(closeDialog());
+    }
+    private IEnumerator closeDialog()
+    {
+        anim.SetBool("isClosed", true);
+        yield return new WaitForSeconds(0.5f);
     }
     public void playDialog1()
     {

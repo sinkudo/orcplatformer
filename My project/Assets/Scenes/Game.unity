@@ -6902,12 +6902,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1731446227}
-  test: {fileID: 11400000, guid: 00a4c3d31f31039479ecc2b3b55f64a6, type: 2}
+  cost1: 10
+  cost2: 10
   npc1: {fileID: 278088810}
   npc2: {fileID: 1839178405}
   responses: {fileID: 282708898}
   startedConv: 0
   player: {fileID: 2000530578}
+  btn1: {fileID: 868904383}
 --- !u!1 &820616942
 GameObject:
   m_ObjectHideFlags: 0
@@ -8986,6 +8988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7a41585c87c434eaab9f039d056b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  d: {fileID: 0}
+  collectCoin: {fileID: 0}
 --- !u!1 &1039521376
 GameObject:
   m_ObjectHideFlags: 0
@@ -9899,12 +9903,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d121d7ae1df42074fa748bd35cdee181, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee3ff9fc8be1e3d458fa5bbffb2d2910, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.9, y: 0.872}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -12289,12 +12293,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d121d7ae1df42074fa748bd35cdee181, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ee3ff9fc8be1e3d458fa5bbffb2d2910, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.9, y: 0.872}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -53,9 +53,13 @@ public class Player : MonoBehaviour
         get { return (Player_State)animator.GetInteger("State"); }
         set { animator.SetInteger("State", (int)value); }
     }
-    
+    private void Awake()
+    {
+        FindObjectOfType<Save>().LoadGame();
+    }
     void Start()
     {
+        print("start");
         facingRight = true;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponentInChildren<SpriteRenderer>();
@@ -267,6 +271,10 @@ public class Player : MonoBehaviour
             DialogBox.GetComponent<Dialogue>().startedConv = true;
             //GameObject.Find("DialogueBox").GetComponent<Dialogue>().playDialog2();
         }
+    }
+    public void LoadDamage(float _d)
+    {
+        damage = _d;
     }
 }
 

@@ -9,17 +9,24 @@ public class CoinCounter : MonoBehaviour
     Player player;
     CollectCoin collect;
     TextMeshProUGUI textmesh;
-    void Start()
+    private void Awake()
     {
-        //player = GameObject.Find("Player").GetComponent<Player>();
         collect = GameObject.Find("Player").GetComponentInChildren<CollectCoin>();
         textmesh = GetComponent<TextMeshProUGUI>();
+    }
+    void Start()
+    {
+        ////player = GameObject.Find("Player").GetComponent<Player>();
+        //collect = GameObject.Find("Player").GetComponentInChildren<CollectCoin>();
+        //textmesh = GetComponent<TextMeshProUGUI>();
+        textmesh.text = collect.Coins.ToString();
+        print(collect.Coins);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //textmesh.text = player.Coins.ToString();
         textmesh.text = collect.Coins.ToString();
+        //print("Coin Counter " +collect.Coins);
     }
 }

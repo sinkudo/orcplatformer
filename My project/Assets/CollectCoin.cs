@@ -10,13 +10,17 @@ public class CollectCoin : MonoBehaviour
     void Start()
     {
         //player = GetComponentInParent<Player>();
-        Coins = 0;
+        //if(Coins <= 0)
+        //    Coins = 0;
+        if (!PlayerPrefs.HasKey("coins"))
+            Coins = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+            Coins++;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,5 +29,10 @@ public class CollectCoin : MonoBehaviour
             Coins++;
             Destroy(collision.gameObject);
         }
+    }
+    public void LoadCoin(int _c)
+    {
+        print(_c);
+        Coins = _c;
     }
 }

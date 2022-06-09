@@ -12,7 +12,8 @@ public class Health : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        curHealth = startingHealth;
+        if(!PlayerPrefs.HasKey("hp"))
+            curHealth = startingHealth;
     }
     public void TakeDamage(float _damage)
     {
@@ -54,5 +55,10 @@ public class Health : MonoBehaviour
     {
         startingHealth++;
         curHealth = startingHealth;
+    }
+    public void loadHealth(float _maxHealth, float _curHealth)
+    {
+        startingHealth = _maxHealth;
+        curHealth = _curHealth;
     }
 }

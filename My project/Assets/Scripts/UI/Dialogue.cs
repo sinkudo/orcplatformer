@@ -27,6 +27,7 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         gameObject.SetActive(false);
+        print(cost1 + " " + cost2);
         //StartCoroutine(ShowDialog(test));
     }
     private void Update()
@@ -61,8 +62,16 @@ public class Dialogue : MonoBehaviour
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.I));
         }
         responses.SetActive(true);
+        print(leave);
         if (leave)
+        {
+            print("activate");
             btn1.SetActive(false);
+        }
+        else
+        {
+            btn1.SetActive(true);
+        }
         StopAllCoroutines();
         //anim.SetBool("isClosed", true);
         //StartCoroutine(closeDialog());
@@ -76,6 +85,7 @@ public class Dialogue : MonoBehaviour
     {
         if (startedConv)
             return;
+        leave = true;
         responses.SetActive(false);
         startedConv = true;
         string[] lines = new string[3];
@@ -97,12 +107,13 @@ public class Dialogue : MonoBehaviour
     {
         if (startedConv)
             return;
+        leave = true;
         responses.SetActive(false);
         startedConv = true;
         string[] lines = new string[3];
         lines[0] = "Здарова, Жоский Рубака";
         lines[1] = "Нужно заточить твою чопу?";
-        if (player.GetComponentInChildren<CollectCoin>().Coins < cost1)
+        if (player.GetComponentInChildren<CollectCoin>().Coins < cost2)
         {
             lines[2] = "Прости у тебя маловато картошки";
         }

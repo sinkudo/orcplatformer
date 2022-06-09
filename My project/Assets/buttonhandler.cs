@@ -25,8 +25,11 @@ public class buttonhandler : MonoBehaviour
         if (npc1.GetComponent<npc>().playerNear)
         {
             //Dialogue d = GameObject.Find("DialogueBox").GetComponent
+
             collectCoin.Coins -= d.cost1;
             d.cost1 *= 2;
+            //collectCoin.Coins -= Dialogue.cost1;
+            //Dialogue.cost1 *= 2;
             p.GetComponent<Health>().UpgradeHealth();
             close();
         }
@@ -34,6 +37,8 @@ public class buttonhandler : MonoBehaviour
         {
             collectCoin.Coins -= d.cost2;
             d.cost2 *= 2;
+            //collectCoin.Coins -= Dialogue.cost2;
+            //Dialogue.cost2 *= 2;
             p.GetComponent<Player>().UpgradeDamage();
             close();
         }

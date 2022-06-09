@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] public float startingHealth;
     private Animator animator;
     [SerializeField] private LayerMask ground;
+    public GameObject PlayerDeathScreen;
     
     public float curHealth { get; private set; }
     void Start()
@@ -24,6 +25,7 @@ public class Health : MonoBehaviour
             if (GetComponent<Player>() != null)
             {
                 GetComponent<Player>().enabled = false;
+                StartCoroutine(DeathAnim());
             }
             if (GetComponent<Enemy>() != null)
             {
@@ -47,6 +49,12 @@ public class Health : MonoBehaviour
         enemy.isDead = true;
         Destroy(gameObject);
     }
+    private IEnumerator DeathAnim()
+    {
+        yield return new WaitForSeconds(1);
+        PlayerDeathScreen.SetActive(true);
+        Time.timeScale = 0;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position, new Vector2(0, -1.5f));
@@ -60,5 +68,10 @@ public class Health : MonoBehaviour
     {
         startingHealth = _maxHealth;
         curHealth = _curHealth;
+    }
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.F))
+        //    TakeDamage(1);
     }
 }

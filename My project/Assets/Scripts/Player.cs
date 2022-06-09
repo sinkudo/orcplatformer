@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         Attack_Hitbox.SetActive(false);
         isInvincible = false;
+        //isInvincible = true;
     }
 
     void Update()

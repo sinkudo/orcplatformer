@@ -62,13 +62,13 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void DamagePlayer()
     {
+        print(PlayerInAttackRange + " " + !player.isInvincible + " " + canDamage);
         if (PlayerInAttackRange && !player.isInvincible && canDamage)
         {
             StartCoroutine(playerblink());
             float push = Mathf.Sign(Destination(player.transform.position)) * 2f;
             player.rb.AddForce(new Vector2(push, 4f), ForceMode2D.Impulse);
             PlayerHealth.TakeDamage(damage);
-            //PlayerHealth.TakeDamage(damage, Destination(transform.position));
         }
     }
     public void checkDeath()

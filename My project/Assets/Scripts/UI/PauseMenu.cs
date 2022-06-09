@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject deathscreen;
     public Save save;
     // Start is called before the first frame update
 
@@ -35,5 +36,14 @@ public class PauseMenu : MonoBehaviour
     {
         GetComponent<Save>().SaveGame();
         SceneManager.LoadScene("Menu");
+    }
+    public void QuitGameWithoutSave()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    public void LoadAfterDeath()
+    {
+        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Game");
     }
 }

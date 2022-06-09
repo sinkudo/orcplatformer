@@ -9,9 +9,6 @@ public class CollectCoin : MonoBehaviour
     public int Coins;
     void Start()
     {
-        //player = GetComponentInParent<Player>();
-        //if(Coins <= 0)
-        //    Coins = 0;
         if (!PlayerPrefs.HasKey("coins"))
             Coins = 0;
     }
@@ -19,8 +16,8 @@ public class CollectCoin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            Coins++;
+        //if (Input.GetKeyDown(KeyCode.R))
+        //    Coins++;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

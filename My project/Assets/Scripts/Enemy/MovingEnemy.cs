@@ -15,7 +15,7 @@ public abstract class MovingEnemy : Enemy
     public bool isAttacking = false;
     public bool justAttacked = false;
     private float attackDelay = 1f;
-    private float currentDelay = 0f;
+    protected float currentDelay = 0f;
     [SerializeField] GameObject Attack_Hitbox;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask ground;
@@ -44,6 +44,7 @@ public abstract class MovingEnemy : Enemy
     }
     void Update()
     {
+        print(justAttacked);
         checkGround();
         if (!isGrounded)
             return;
@@ -123,7 +124,7 @@ public abstract class MovingEnemy : Enemy
     }
     protected void StartHunting()
     {
-        print("hunt" + " " + PlayerInAttackRange);
+        //print("hunt" + " " + PlayerInAttackRange);
         if (PlayerInAttackRange || isCliff())
             return;
         animator.SetTrigger("Enemy_Move");
@@ -210,13 +211,13 @@ public abstract class MovingEnemy : Enemy
     {
         patrolPoint = new Vector3((int)Random.Range(a, b) + startPos.x, startPos.y);
     }
-    void checkGround()
+    protected void checkGround()
     {
         Debug.DrawLine(groundPoint.position, groundPoint.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position, 0.1f, ground);
         isGrounded = colliders.Length >= 1;
     }
-    bool isCliff()
+    protected bool isCliff()
     {
         float moveX = transform.localScale.x;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundPoint.position + new Vector3(moveX, 0), 0.1f, ground);

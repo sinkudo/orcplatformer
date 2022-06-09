@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyPeasant : MovingEnemy
 {
-    protected Vector3 startingPosition;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

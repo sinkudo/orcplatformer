@@ -240,6 +240,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 0
+  PlayerDeathScreen: {fileID: 0}
 --- !u!1 &1340129930059024392
 GameObject:
   m_ObjectHideFlags: 0

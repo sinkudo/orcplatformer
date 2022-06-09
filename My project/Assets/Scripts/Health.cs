@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] public float startingHealth;
     private Animator animator;
     [SerializeField] private LayerMask ground;
+    public GameObject winScreen;
     public GameObject PlayerDeathScreen;
     
     public float curHealth { get; private set; }
@@ -27,8 +28,16 @@ public class Health : MonoBehaviour
                 GetComponent<Player>().enabled = false;
                 StartCoroutine(DeathAnim());
             }
-            if (GetComponent<Enemy>() != null)
+            if (GetComponent<Boss>() != null)
             {
+                GetComponent<Boss>().enabled = false;
+
+                StartCoroutine(BossDeath());
+                //winScreen.SetActive(true);
+            }
+            else if (GetComponent<Enemy>() != null)
+            {
+                GameObject.Find("Player").GetComponent<Health>().Heal();
                 Enemy enemy = GetComponent<Enemy>();
                 DropCoins drop = GetComponent<DropCoins>();
                 drop.spawnCoins();
@@ -55,6 +64,14 @@ public class Health : MonoBehaviour
         PlayerDeathScreen.SetActive(true);
         Time.timeScale = 0;
     }
+    private IEnumerator BossDeath()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Destroy(gameObject);
+        winScreen.SetActive(true);
+        Time.timeScale = 0;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position, new Vector2(0, -1.5f));
@@ -73,5 +90,12 @@ public class Health : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.F))
         //    TakeDamage(1);
+    }
+    public void Heal()
+    {
+        if (curHealth + 0.5f > startingHealth)
+            curHealth = startingHealth;
+        else
+            curHealth += 0.5f;
     }
 }

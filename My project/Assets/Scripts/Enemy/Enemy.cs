@@ -38,6 +38,7 @@ public abstract class Enemy : MonoBehaviour
         if (collision.gameObject.name == "Attack_Hitbox" && gameObject.layer == 6)
         {
             StartCoroutine(blink());
+            print("damage take");
             float push = player.getPlayerDirection() ? 2f : -2f;
             rb.AddForce(new Vector2(push, 1f), ForceMode2D.Impulse);
             health.TakeDamage(player.getPlayerDamage());
@@ -65,7 +66,8 @@ public abstract class Enemy : MonoBehaviour
         print(PlayerInAttackRange + " " + !player.isInvincible + " " + canDamage);
         if (PlayerInAttackRange && !player.isInvincible && canDamage)
         {
-            StartCoroutine(playerblink());
+            //StartCoroutine(playerblink());
+            StartCoroutine(player.blink());
             float push = Mathf.Sign(Destination(player.transform.position)) * 2f;
             player.rb.AddForce(new Vector2(push, 4f), ForceMode2D.Impulse);
             PlayerHealth.TakeDamage(damage);

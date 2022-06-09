@@ -172,7 +172,10 @@ public class Player : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + new Vector3(0, -0.1f));
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f, ground);
-        isGrounded = colliders.Length >= 1;
+        Collider2D[] colliders1 = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 0.5f, transform.position.y), 0.1f, ground);
+        Collider2D[] colliders2 = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 0.5f, transform.position.y), 0.1f, ground);
+        
+        isGrounded = colliders.Length + colliders1.Length + colliders2.Length >= 1;
     }
     void Flip()
     {
@@ -242,6 +245,9 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(transform.position, 0.1f);
+        Gizmos.DrawSphere(new Vector2(transform.position.x + 0.5f, transform.position.y), 0.1f);
+        Gizmos.DrawSphere(new Vector2(transform.position.x - 0.5f, transform.position.y), 0.1f);
+        
     }
     public IEnumerator blink()
     {

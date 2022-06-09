@@ -21,8 +21,11 @@ public class Boss : MovingEnemy
     private void finishedAttack()
     {
         animator.SetBool("finishedAttack", true);
-        animator.SetTrigger("Enemy_Idle");
+        
+        animator.Play("Boss_Idle");
         justAttacked = true;
+        animator.SetTrigger("Enemy_Idle");
+        print("finished");
     }
     private void StartedAttack()
     {
@@ -30,19 +33,20 @@ public class Boss : MovingEnemy
     }
     private void Update()
     {
+        print(justAttacked);
         checkGround();
         if (!isGrounded)
             return;
         if (PlayerInAttackRange && !justAttacked)
         {
             //StartCoroutine(doAttack());
+            print(PlayerInAttackRange);
             doAttack();
             return;
         }
         if (justAttacked)
         {
-            if(animator.GetBool("finishedAttack"))
-                afterAttackChill();
+            afterAttackChill();
             return;
         }
         if (reachedPoint && !inSight)
@@ -63,7 +67,8 @@ public class Boss : MovingEnemy
     new protected void doAttack()
     {
         //print("attack");
-        animator.SetTrigger("Enemy_Attack");
+        animator.Play("Boss_Attack");
+        //animator.SetTrigger("Enemy_Attack");
         //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         //yield return new WaitForSeconds(attackAnimationTime);
         //animator.SetTrigger("Enemy_Idle");
